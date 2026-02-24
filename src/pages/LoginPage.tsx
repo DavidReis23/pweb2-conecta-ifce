@@ -55,7 +55,11 @@ function LoginPage() {
 
     if (response.status === 200) {
       localStorage.setItem('token_access', data.token)
+      setEmail('')
+      setPassword('')
       setError(null)
+      // Redirecionar para a página inicial da área logada
+      // window.location.href = '/feed'
     }
 
     if (data.error) {
