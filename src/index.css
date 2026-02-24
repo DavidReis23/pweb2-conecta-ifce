@@ -47,10 +47,12 @@ body {
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-info: var(--info); /* bg-info text-info border-info */
+  --color-alert: var(--alert); /* bg-alert text-alert border-alert */
 }
 
 :root {
   --info: #00f;
+  --alert: #F00;
   --radius: 0.75rem;
 
   --background: oklch(0.985 0 89.88);

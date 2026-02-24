@@ -1,7 +1,6 @@
 import Brand from "@/components/shared/brand"
 import { Button } from "@/components/ui/button"
 
-
 function Navbar() {
   return (
     <header className="sticky top-0 border-b border-border z-50 bg-card/80 backdrop-blur-md">

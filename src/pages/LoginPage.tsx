@@ -3,18 +3,51 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import { EyeIcon, EyeOffIcon } from "lucide-react"
-import { useState } from "react"
+import { EyeIcon, EyeOffIcon, Loader2Icon } from "lucide-react"
+import React, { useState } from "react"
 
 function LoginPage() {
 
   const [showPass, setShowPass] = useState<boolean>(false)
+  const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const handleSubmit = async (event: React.SubmitEvent) => {
+    event.preventDefault()
+
+    setIsLoading(true)
+
+    const response = await fetch(
+      'https://conectaifce-api.proflucasmendes.com.br/auth/login',
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email,
+          password
+        })
+      }
+    )
+
+    const data = await response.json()
+
+    if (response.status === 200) {
+      localStorage.setItem("token_access", data.token)
+    }
+
+    console.log(data)
+
+    setIsLoading(false)
+
+  }
 
   return (
     <section className="flex-1 flex items-center justify-center py-20">
       <Card className="max-w-md border-border w-md">
         <CardHeader className="text-center">
-
           <div className="w-full flex justify-center mb-4">
             <Brand />
           </div>
@@ -28,14 +61,18 @@ function LoginPage() {
         </CardHeader>
 
         <CardContent>
-          <form className="flex flex-col gap-4">
+          <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-2">
-              <Label htmlFor="email" className="text-foreground">E-mail institucional</Label>
+              <Label htmlFor="email" className="text-foreground">
+                E-mail institucional
+              </Label>
               <Input
                 id="email"
                 name="email"
                 type="email"
                 placeholder="seu.nome@ifce.edu.br"
+                value={email}
+                onChange={(e) => setEmail(e.currentTarget.value)}
                 required
                 className="h-11 bg-background"
               />
@@ -43,16 +80,22 @@ function LoginPage() {
 
             <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password" className="text-foreground">Senha</Label>
-                <a href="/recover" className="text-primary text-sm">Esqueceu a senha?</a>
+                <Label htmlFor="password" className="text-foreground">
+                  Senha
+                </Label>
+                <a href="/recover" className="text-primary text-sm">
+                  Esqueceu a senha?
+                </a>
               </div>
 
               <div className="relative">
                 <Input
                   id="password"
                   name="password"
-                  type={ showPass ? "text" : "password" }
+                  type={showPass ? 'text' : 'password'}
                   placeholder="Digite sua senha"
+                  value={password}
+                  onChange={(e) => setPassword(e.currentTarget.value)}
                   required
                   className="h-11 bg-background"
                 />
@@ -60,20 +103,35 @@ function LoginPage() {
                 <button
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary"
                   type="button"
-                  onClick={() => setShowPass(prev => !prev)}
+                  onClick={() => setShowPass((prev) => !prev)}
                 >
-                  { showPass ? <EyeOffIcon className="size-4" /> : <EyeIcon className="size-4" /> }
+                  {showPass ? (
+                    <EyeOffIcon className="size-4" />
+                  ) : (
+                    <EyeIcon className="size-4" />
+                  )}
                 </button>
               </div>
             </div>
 
-            <Button type="submit" className="mt-2 h-11">Entrar</Button>
+            <Button type="submit" className="mt-2 h-11" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <Loader2Icon className='animate-spin' /> <span>Entrando...</span>
+                </>
+              ) : (
+                'Entrar'
+              )}
+            </Button>
           </form>
         </CardContent>
 
         <CardFooter className="border-t border-border">
           <p className="text-sm text-muted-foreground text-center w-full">
-            Não tem conta? <a href="/register" className="text-primary">Criar conta</a>
+            Não tem conta?{' '}
+            <a href="/register" className="text-primary">
+              Criar conta
+            </a>
           </p>
         </CardFooter>
       </Card>
