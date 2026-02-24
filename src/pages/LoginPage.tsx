@@ -1,17 +1,35 @@
-import Brand from "@/components/shared/brand"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { EyeIcon, EyeOffIcon, Loader2Icon } from "lucide-react"
-import React, { useState } from "react"
+import Brand from '@/components/shared/brand'
+import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { EyeIcon, EyeOffIcon, Loader2Icon } from 'lucide-react'
+import React, { useState } from 'react'
 
 function LoginPage() {
-
   const [showPass, setShowPass] = useState<boolean>(false)
-  const [email, setEmail] = useState<string>("")
-  const [password, setPassword] = useState<string>("")
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+
+  // Aqui estamos criando um estado para controlar se a aplicação está em processo de login (isLoading)
+  // Quando o usuário clica no botão de login, definimos isLoading como true, indicando que a aplicação está processando a solicitação de login
+  // Durante esse tempo, o botão de login é desabilitado para evitar múltiplos cliques e, em vez do texto "Entrar", exibimos um ícone de carregamento (Loader2Icon) junto com o texto "Entrando..."
+  // Assim que a resposta da API é recebida e o processo de login é concluído (seja com sucesso ou com erro), definimos isLoading como false, permitindo que o usuário interaja novamente com o botão de login
   const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  // Aqui estamos criando um estado para armazenar mensagens de erro
+  // Observe ao longo do código que, quando ocorre um erro, atualizamos esse estado com a mensagem de erro recebida da API
+  // E, na interface do usuário, verificamos se há uma mensagem de erro e a exibimos para o usuário, proporcionando feedback sobre o que deu errado
+  // Além disso, definimos um timeout para limpar a mensagem de erro após 3 segundos, garantindo que a interface fique limpa novamente
+  // Também atualizamos o estilo dos rótulos (labels) para que, quando houver um erro, eles fiquem com a cor de texto de erro (text-destructive), destacando visualmente o problema para o usuário
+  const [error, setError] = useState<string | null>(null)
 
   const handleSubmit = async (event: React.SubmitEvent) => {
     event.preventDefault()
@@ -21,27 +39,31 @@ function LoginPage() {
     const response = await fetch(
       'https://conectaifce-api.proflucasmendes.com.br/auth/login',
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           email,
-          password
-        })
-      }
+          password,
+        }),
+      },
     )
 
     const data = await response.json()
-
-    if (response.status === 200) {
-      localStorage.setItem("token_access", data.token)
-    }
-
     console.log(data)
 
-    setIsLoading(false)
+    if (response.status === 200) {
+      localStorage.setItem('token_access', data.token)
+      setError(null)
+    }
 
+    if (data.error) {
+      setError(data.error.message)
+      setTimeout(() => setError(null), 3000)
+    }
+
+    setIsLoading(false)
   }
 
   return (
@@ -63,7 +85,10 @@ function LoginPage() {
         <CardContent>
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-2">
-              <Label htmlFor="email" className="text-foreground">
+              <Label
+                htmlFor="email"
+                className={`text-foreground ${error && 'text-destructive'}`}
+              >
                 E-mail institucional
               </Label>
               <Input
@@ -80,7 +105,10 @@ function LoginPage() {
 
             <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password" className="text-foreground">
+                <Label
+                  htmlFor="password"
+                  className={`text-foreground ${error && 'text-destructive'}`}
+                >
                   Senha
                 </Label>
                 <a href="/recover" className="text-primary text-sm">
@@ -117,12 +145,17 @@ function LoginPage() {
             <Button type="submit" className="mt-2 h-11" disabled={isLoading}>
               {isLoading ? (
                 <>
-                  <Loader2Icon className='animate-spin' /> <span>Entrando...</span>
+                  <Loader2Icon className="animate-spin" />{' '}
+                  <span>Entrando...</span>
                 </>
               ) : (
                 'Entrar'
               )}
             </Button>
+
+            {error && (
+              <p className="text-destructive text-sm text-center">{error}</p>
+            )}
           </form>
         </CardContent>
 
