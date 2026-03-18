@@ -3,7 +3,7 @@ import Navbar from '@/components/shared/navbar'
 import HomePage from '@/pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
-import { Outlet } from 'react-router'
+import { Outlet, useLocation } from 'react-router'
 
 function App() {
   return (

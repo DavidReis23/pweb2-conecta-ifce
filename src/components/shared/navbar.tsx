@@ -1,5 +1,5 @@
-import Brand from "@/components/shared/brand"
-import { Button } from "@/components/ui/button"
+import Brand from '@/components/shared/brand'
+import { Button } from '@/components/ui/button'
 
 function Navbar() {
   return (

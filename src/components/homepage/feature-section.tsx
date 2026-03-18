@@ -1,5 +1,5 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { BookOpen, FolderSearch, Trophy, Users } from "lucide-react"
+import { Card, CardContent } from '@/components/ui/card'
+import { BookOpen, FolderSearch, Trophy, Users } from 'lucide-react'
 
 const features = [
   {
@@ -30,7 +30,7 @@ const features = [
 
 function FeatureSection() {
   return (
-    <section className="bg-background py-20">
+    <section className="bg-background py-20" id="feature-section">
       <div className="container-main">
         <div className="mx-auto text-center max-w-2xl">
           <p className="text-primary uppercase tracking-wide font-semibold text-sm">
@@ -45,17 +45,24 @@ function FeatureSection() {
         </div>
 
         <div className="mt-16 grid grid-cols-4 gap-6">
-          { features.map(feature => (
-            <Card key={feature.title} className="border-border bg-card hover:border-primary/30 hover:shadow-md transition-all duration-200">
+          {features.map((feature) => (
+            <Card
+              key={feature.title}
+              className="border-border bg-card hover:border-primary/30 hover:shadow-md transition-all duration-200"
+            >
               <CardContent className="flex flex-col px-6">
                 <div className="flex items-center justify-center size-10 bg-primary/10 rounded-lg">
                   <feature.icon className="size-5 text-primary" />
                 </div>
-                <h3 className="text-lg mt-4 font-semibold text-foreground">{feature.title}</h3>
-                <p className="mt-2 text-muted-foreground text-sm text-balance leading-relaxed">{feature.description}</p>
+                <h3 className="text-lg mt-4 font-semibold text-foreground">
+                  {feature.title}
+                </h3>
+                <p className="mt-2 text-muted-foreground text-sm text-balance leading-relaxed">
+                  {feature.description}
+                </p>
               </CardContent>
             </Card>
-          )) }
+          ))}
         </div>
       </div>
     </section>

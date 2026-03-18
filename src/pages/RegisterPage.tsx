@@ -204,9 +204,9 @@ function RegisterPage() {
 
         <CardFooter className="border-t border-border">
           <p className="text-sm text-muted-foreground text-center w-full">
-            Não tem conta?{' '}
-            <a href="/register" className="text-primary">
-              Criar conta
+            Já tem conta?{' '}
+            <a href="/login" className="text-primary">
+              Login
             </a>
           </p>
         </CardFooter>

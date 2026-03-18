@@ -24,29 +24,29 @@ function HeroSection() {
         </p>
 
         <Button className="mt-10" size="lg" asChild>
-          <a href="/register" className='flex gap-2 items-center w-60 h-12'>
-            <span className='uppercase tracking-wider'>Participar agora</span>
-            <ArrowRight className='size-4' />
+          <a href="/register" className="flex gap-2 items-center w-60 h-12">
+            <span className="uppercase tracking-wider">Participar agora</span>
+            <ArrowRight className="size-4" />
           </a>
         </Button>
 
-        <div className='mt-16 flex items-center gap-8 text-sm text-muted-foreground'>
-          <div className='flex flex-col gap-1'>
-            <span className='text-foreground font-bold text-2xl'>2.500+</span>
+        <div className="mt-16 flex items-center gap-8 text-sm text-muted-foreground">
+          <div className="flex flex-col gap-1">
+            <span className="text-foreground font-bold text-2xl">2.500+</span>
             <span>Estudantes</span>
           </div>
 
-          <div className='h-8 w-px bg-border'></div>
+          <div className="h-8 w-px bg-border"></div>
 
-          <div className='flex flex-col gap-1'>
-            <span className='text-foreground font-bold text-2xl'>32</span>
+          <div className="flex flex-col gap-1">
+            <span className="text-foreground font-bold text-2xl">32</span>
             <span>Campi</span>
           </div>
 
-          <div className='h-8 w-px bg-border'></div>
+          <div className="h-8 w-px bg-border"></div>
 
-          <div className='flex flex-col gap-1'>
-            <span className='text-foreground font-bold text-2xl'>50+</span>
+          <div className="flex flex-col gap-1">
+            <span className="text-foreground font-bold text-2xl">50+</span>
             <span>Grupos</span>
           </div>
         </div>
