@@ -18,11 +18,11 @@ const router = createBrowserRouter([
         Component: HomePage,
       },
       {
-        path: '/login',
+        path: 'login',
         Component: LoginPage,
       },
       {
-        path: '/register',
+        path: 'register',
         Component: RegisterPage,
       },
     ],

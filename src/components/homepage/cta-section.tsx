@@ -4,7 +4,7 @@ import { Link } from 'react-router'
 
 function CtaSection() {
   return (
-    <section className="bg-background py-20">
+    <section className="bg-background py-20" id="faq-section">
       <div className="container-main">
         <div className="mx-auto text-center max-w-2xl">
           <h2 className="text-4xl font-bold text-balance text-foreground tracking-tight">

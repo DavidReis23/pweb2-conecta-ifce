@@ -1,10 +1,14 @@
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Sparkles } from 'lucide-react'
+import { Link } from 'react-router'
 
 function HeroSection() {
   return (
     <section className="bg-card bg-soft-radial">
-      <div className="container-main flex flex-col items-center text-center py-20">
+      <div
+        className="container-main flex flex-col items-center text-center py-20"
+        id="hero-section"
+      >
         <div className="bg-muted border border-border py-1.5 px-4 flex items-center gap-2 rounded-full text-sm">
           <Sparkles className="text-primary size-3.5" />
           <span className="text-muted-foreground">
@@ -24,10 +28,10 @@ function HeroSection() {
         </p>
 
         <Button className="mt-10" size="lg" asChild>
-          <a href="/register" className="flex gap-2 items-center w-60 h-12">
+          <Link to="/register" className="flex gap-2 items-center w-60 h-12">
             <span className="uppercase tracking-wider">Participar agora</span>
             <ArrowRight className="size-4" />
-          </a>
+          </Link>
         </Button>
 
         <div className="mt-16 flex items-center gap-8 text-sm text-muted-foreground">
