@@ -11,7 +11,7 @@ import {
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { EyeIcon, EyeOffIcon, Loader2Icon } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useState, type ReactEventHandler } from 'react'
 import {
   Select,
   SelectContent,
@@ -21,23 +21,23 @@ import {
 } from '@/components/ui/select'
 import { registerSchema } from '@/schemas/register.schema'
 import { ZodError } from 'zod'
+import { Link } from 'react-router-dom'
 
 function RegisterPage() {
   const [showPass, setShowPass] = useState<boolean>(false)
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
-  const [iscarregado, setIscarregado] = useState<boolean>(false)
+  const [isCarregando, setIsCarregando] = useState(false)
 
   const handleSubmit = (event: React.SubmitEvent) => {
     event.preventDefault()
 
-    const formData = new FormData(event.target) // ✅ corrigido
+    const formData = new FormData(event.target)
 
     const data = {
       firstName: formData.get('firstName'),
+      lastName: formData.get('lastName'),
+      email: formData.get('email'),
       password: formData.get('password'),
     }
-
     try {
       const validateData = registerSchema.parse(data)
       console.log(validateData)
@@ -68,59 +68,44 @@ function RegisterPage() {
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div className="flex items-center gap-4">
               <div className="flex flex-col gap-2">
-                <Label htmlFor="firstName" className="text-foreground">
-                  Nome
-                </Label>
+                <Label htmlFor="firstName">Nome</Label>
                 <Input
                   id="firstName"
                   name="firstName"
                   type="text"
                   placeholder="Seu nome"
                   required
-                  className="h-11 bg-background"
                 />
               </div>
 
               <div className="flex flex-col gap-2">
-                <Label htmlFor="lastName" className="text-foreground">
-                  Sobrenome
-                </Label>
+                <Label htmlFor="lastName">Sobrenome</Label>
                 <Input
                   id="lastName"
                   name="lastName"
                   type="text"
                   placeholder="Seu sobrenome"
-                  className="h-11 bg-background"
                 />
               </div>
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label htmlFor="email" className="text-foreground">
-                E-mail institucional
-              </Label>
+              <Label htmlFor="email">E-mail institucional</Label>
               <Input
                 id="email"
                 name="email"
                 type="email"
                 placeholder="seu.nome@ifce.edu.br"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.currentTarget.value)
-                }}
                 className="h-11 bg-background"
               />
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label htmlFor="role" className="text-foreground">
-                Vinculo
-              </Label>
+              <Label>Vínculo</Label>
               <Select>
-                <SelectTrigger className="bg-background w-full h-11" id="role">
-                  <SelectValue placeholder="Selecione seu vinculo com o IFCE" />
+                <SelectTrigger className="w-full h-11">
+                  <SelectValue placeholder="Selecione seu vínculo" />
                 </SelectTrigger>
-
                 <SelectContent>
                   <SelectItem value="student">Estudante</SelectItem>
                   <SelectItem value="professor">Docente</SelectItem>
@@ -130,17 +115,11 @@ function RegisterPage() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label htmlFor="role" className="text-foreground">
-                Campus
-              </Label>
+              <Label>Campus</Label>
               <Select>
-                <SelectTrigger
-                  className="bg-background w-full h-11"
-                  id="campus"
-                >
-                  <SelectValue placeholder="Selecione seu vinculo com o IFCE" />
+                <SelectTrigger className="w-full h-11">
+                  <SelectValue placeholder="Selecione seu campus" />
                 </SelectTrigger>
-
                 <SelectContent>
                   <SelectItem value="taua">Tauá</SelectItem>
                   <SelectItem value="boa_viagem">Boa Viagem</SelectItem>
@@ -150,59 +129,39 @@ function RegisterPage() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label htmlFor="password" className="text-foreground">
-                Senha
-              </Label>
+              <Label htmlFor="password">Senha</Label>
               <div className="relative">
                 <Input
                   id="password"
                   name="password"
                   type={showPass ? 'text' : 'password'}
                   placeholder="Digite sua senha"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.currentTarget.value)
-                  }}
                   required
                   className="h-11 bg-background"
                 />
 
                 <button
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary"
                   type="button"
                   onClick={() => setShowPass((prev) => !prev)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2"
                 >
-                  {showPass ? (
-                    <EyeOffIcon className="size-4" />
-                  ) : (
-                    <EyeIcon className="size-4" />
-                  )}
+                  {showPass ? <EyeOffIcon size={16} /> : <EyeIcon size={16} />}
                 </button>
               </div>
-              <p className="text-xs text-muted-foreground">
-                Minimo de 8 caracteres com letra e numeros
-              </p>
             </div>
 
-            <Button type="submit" className="mt-2 h-11" disabled={iscarregado}>
-              {iscarregado ? (
-                <>
-                  <Loader2Icon className="animate-spin" />
-                  <span>Criando...</span>{' '}
-                </>
-              ) : (
-                'Criar Conta'
-              )}
+            <Button type="submit" className="h-11 mt-2">
+              Criar conta
             </Button>
           </form>
         </CardContent>
 
         <CardFooter className="border-t border-border">
-          <p className="text-sm text-muted-foreground text-center w-full">
+          <p className="text-sm text-center w-full">
             Já tem conta?{' '}
-            <a href="/login" className="text-primary">
+            <Link to="/login" className="text-primary">
               Login
-            </a>
+            </Link>
           </p>
         </CardFooter>
       </Card>
