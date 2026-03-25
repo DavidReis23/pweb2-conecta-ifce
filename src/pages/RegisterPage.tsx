@@ -11,7 +11,7 @@ import {
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { EyeIcon, EyeOffIcon, Loader2Icon } from 'lucide-react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import {
   Select,
   SelectContent,
@@ -19,6 +19,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { registerSchema } from '@/schemas/register.schema'
+import { ZodError } from 'zod'
 
 function RegisterPage() {
   const [showPass, setShowPass] = useState<boolean>(false)
@@ -26,29 +28,24 @@ function RegisterPage() {
   const [password, setPassword] = useState<string>('')
   const [iscarregado, setIscarregado] = useState<boolean>(false)
 
-  const handleSubmit = async (event: React.SubmitEvent) => {
-    setIscarregado(true)
+  const handleSubmit = (event: React.SubmitEvent) => {
     event.preventDefault()
 
-    const response = await fetch(
-      'https://conectaifce-api.proflucasmendes.com.br/auth/login',
-      {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      },
-    )
-    const data = await response.json()
-    if (response.status === 200) {
-      localStorage.setItem('token_access', data.token)
+    const formData = new FormData(event.target) // ✅ corrigido
+
+    const data = {
+      firstName: formData.get('firstName'),
+      password: formData.get('password'),
     }
-    console.log(data)
-    setIscarregado(false)
+
+    try {
+      const validateData = registerSchema.parse(data)
+      console.log(validateData)
+    } catch (error) {
+      if (error instanceof ZodError) {
+        console.log(error)
+      }
+    }
   }
 
   return (
@@ -71,12 +68,12 @@ function RegisterPage() {
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div className="flex items-center gap-4">
               <div className="flex flex-col gap-2">
-                <Label htmlFor="nome" className="text-foreground">
+                <Label htmlFor="firstName" className="text-foreground">
                   Nome
                 </Label>
                 <Input
-                  id="nome"
-                  name="nome"
+                  id="firstName"
+                  name="firstName"
                   type="text"
                   placeholder="Seu nome"
                   required
@@ -85,15 +82,14 @@ function RegisterPage() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <Label htmlFor="sobrenome" className="text-foreground">
+                <Label htmlFor="lastName" className="text-foreground">
                   Sobrenome
                 </Label>
                 <Input
-                  id="sobrenome"
-                  name="sobrenome"
+                  id="lastName"
+                  name="lastName"
                   type="text"
                   placeholder="Seu sobrenome"
-                  required
                   className="h-11 bg-background"
                 />
               </div>
@@ -112,7 +108,6 @@ function RegisterPage() {
                 onChange={(e) => {
                   setEmail(e.currentTarget.value)
                 }}
-                required
                 className="h-11 bg-background"
               />
             </div>
@@ -121,7 +116,7 @@ function RegisterPage() {
               <Label htmlFor="role" className="text-foreground">
                 Vinculo
               </Label>
-              <Select required>
+              <Select>
                 <SelectTrigger className="bg-background w-full h-11" id="role">
                   <SelectValue placeholder="Selecione seu vinculo com o IFCE" />
                 </SelectTrigger>
@@ -129,7 +124,7 @@ function RegisterPage() {
                 <SelectContent>
                   <SelectItem value="student">Estudante</SelectItem>
                   <SelectItem value="professor">Docente</SelectItem>
-                  <SelectItem value="technician">Tecnico</SelectItem>
+                  <SelectItem value="technician">Técnico</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -138,7 +133,7 @@ function RegisterPage() {
               <Label htmlFor="role" className="text-foreground">
                 Campus
               </Label>
-              <Select required>
+              <Select>
                 <SelectTrigger
                   className="bg-background w-full h-11"
                   id="campus"
