@@ -1,4 +1,5 @@
 import { string } from 'zod'
+import { ApiError, type ApiErrorResponse } from './api-error'
 
 const API_URL = import.meta.env.VITE_API_URL
 
@@ -9,11 +10,15 @@ export const http = {
   ): Promise<ResponseType> => {
     const finalUrl = buildUrl(endPoint, searchParams)
     const reponse = await fetch(finalUrl)
+    const responseBody = await reponse.json()
+
     if (reponse.ok) {
       return (await reponse.json()) as ResponseType
     }
 
-    throw new Error('Erro ao buscar dados.')
+    const { error } = responseBody as ApiErrorResponse
+
+    throw new ApiError(error.message, error.code, reponse.status, error.details)
   },
   post: async <ResponseType>(
     endPoint: string,
@@ -27,11 +32,16 @@ export const http = {
       },
       body: JSON.stringify(body),
     })
+
+    const responseBody = await reponse.json()
+
     if (reponse.ok) {
-      return (await reponse.json()) as ResponseType
+      return responseBody as ResponseType
     }
 
-    throw new Error('Erro ao enviar dados.')
+    const { error } = responseBody as ApiErrorResponse
+
+    throw new ApiError(error.message, error.code, reponse.status, error.details)
   },
 }
 
