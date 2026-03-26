@@ -1,8 +1,8 @@
-import Footer from '@/components/shared/footer'
-import Navbar from '@/components/shared/navbar'
+import Navbar from './shared/components/navbar'
+import Footer from './shared/components/footer'
 import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
-import useScroll from './hooks/useScroll'
+import useScroll from './shared/hooks/useScroll'
 
 function App() {
   useScroll()
