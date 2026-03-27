@@ -10,16 +10,20 @@ export const http = {
   ): Promise<ResponseType> => {
     const finalUrl = buildUrl(endPoint, searchParams)
     const reponse = await fetch(finalUrl)
+
+    // Lemos o JSON apenas uma vez e guardamos na variável
     const responseBody = await reponse.json()
 
     if (reponse.ok) {
-      return (await reponse.json()) as ResponseType
+      // Retornamos a variável que já tem os dados (Sem ler de novo!)
+      return responseBody as ResponseType
     }
 
     const { error } = responseBody as ApiErrorResponse
 
     throw new ApiError(error.message, error.code, reponse.status, error.details)
   },
+
   post: async <ResponseType>(
     endPoint: string,
     body: any,

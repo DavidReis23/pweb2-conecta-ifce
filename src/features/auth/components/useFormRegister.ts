@@ -8,9 +8,12 @@ import {
 } from '../schemas/register.schema'
 import { http } from '@/infra/http/http-client'
 import { setAccessToken } from '../storage/auth.storage'
+import { ApiError } from '@/infra/http/api-error'
+import { getCampuses, registerUser } from '../services/register.service'
 
 export function useFormRegister() {
   const [showPass, setShowPass] = useState<boolean>(false)
+  const [registerError, setRegisterError] = useState<string | null>(null)
   const [campuses, setCampuses] = useState<
     Array<{
       id: string
@@ -22,12 +25,7 @@ export function useFormRegister() {
   useEffect(() => {
     async function fetchCampuses() {
       try {
-        const campuses = await http.get<
-          Array<{
-            id: string
-            name: string
-          }>
-        >('campuses')
+        const campuses = await getCampuses()
         setCampuses(campuses)
       } catch (error) {
         console.error(error)
@@ -49,18 +47,19 @@ export function useFormRegister() {
   })
 
   const onSubmit = async (data: RegisterFormData) => {
-    const { course, ...reset } = data
-    const payload = data.role === 'student' ? data : reset
+    const { course, ...rest } = data
+    const payload = data.role === 'student' ? data : rest
 
     try {
-      const responseData = await http.post<{ token: string; user: any }>(
-        'auth/register',
-        payload,
-      )
-      setAccessToken(responseData.token)
+      registerUser({
+        ...payload,
+        email: payload.email || '',
+      })
       navigate('/feed')
     } catch (error) {
-      console.error(error)
+      if (error instanceof ApiError) {
+        setRegisterError(error.message)
+      }
     }
   }
 
@@ -68,6 +67,7 @@ export function useFormRegister() {
     state: {
       showPass,
       setShowPass,
+      registerError,
       campuses,
     },
     onSubmit,
