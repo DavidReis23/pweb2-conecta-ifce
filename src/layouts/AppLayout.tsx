@@ -1,15 +1,32 @@
-import Footer from '@/shared/components/footer'
+import { useAuth } from '@/features/auth/context/AuthContext'
 import Navbar from '@/shared/components/navbar'
-import useScroll from '@/shared/hooks/useScroll'
-import { Outlet } from 'react-router-dom'
+import { Button } from '@/shared/components/ui/button'
+import UserMenu from '@/shared/components/user-menu'
+import { Link } from 'react-router'
+import { Navigate, Outlet } from 'react-router-dom'
 
 function AppLayout() {
-  useScroll()
+  const { isAthenticated } = useAuth()
+
+  if (!isAthenticated) {
+    return <Navigate to="/login" replace />
+  }
 
   return (
     <>
       <div className="flex flex-col min-h-svh">
-        <Navbar />
+        <Navbar>
+          <Navbar.Brand to="/feed" />
+
+          <Navbar.Links>
+            <Navbar.Link to="/feed" text="Feed" />
+            <Navbar.Link to="/groups" text="Grupos" />
+          </Navbar.Links>
+
+          <Navbar.Actions>
+            <UserMenu />
+          </Navbar.Actions>
+        </Navbar>
         <main className="flex-1 flex flex-col">
           <Outlet />
         </main>
