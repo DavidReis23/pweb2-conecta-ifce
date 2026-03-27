@@ -7,6 +7,8 @@ import LoginPage from '@/pages/LoginPage.tsx'
 import HomePage from '@/pages/homepage/HomePage.tsx'
 import RegisterPage from '@/pages/RegisterPage.tsx'
 import { Router } from 'lucide-react'
+import { AuthProvider } from './features/auth/context/AuthContext.tsx'
+import FeedPage from './pages/FeedPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -25,11 +27,17 @@ const router = createBrowserRouter([
         path: 'register',
         Component: RegisterPage,
       },
+      {
+        path: 'feed',
+        Component: FeedPage,
+      },
     ],
   },
 ])
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>,
 )

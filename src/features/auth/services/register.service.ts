@@ -1,5 +1,5 @@
 import { http } from '@/infra/http/http-client'
-import { setAccessToken } from '../storage/auth.storage'
+import { setAccessToken } from '../storages/token.storage'
 import type {
   UserRequesTDO,
   UserResponseDTO,

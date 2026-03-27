@@ -7,9 +7,10 @@ import {
   type RegisterFormData,
 } from '../schemas/register.schema'
 import { http } from '@/infra/http/http-client'
-import { setAccessToken } from '../storage/auth.storage'
+import { setAccessToken } from '../storages/token.storage'
 import { ApiError } from '@/infra/http/api-error'
 import { getCampuses, registerUser } from '../services/register.service'
+import { useAuth } from '../context/AuthContext'
 
 export function useFormRegister() {
   const [showPass, setShowPass] = useState<boolean>(false)
@@ -21,6 +22,7 @@ export function useFormRegister() {
     }>
   >([])
   const navigate = useNavigate()
+  const { setAuthUser } = useAuth()
 
   useEffect(() => {
     async function fetchCampuses() {
@@ -48,13 +50,11 @@ export function useFormRegister() {
 
   const onSubmit = async (data: RegisterFormData) => {
     const { course, ...rest } = data
-    const payload = data.role === 'student' ? data : rest
+    const payload = data.role === 'STUDENT' ? data : rest
 
     try {
-      registerUser({
-        ...payload,
-        email: payload.email || '',
-      })
+      const responseData = await registerUser(payload)
+      setAuthUser(responseData.user)
       navigate('/feed')
     } catch (error) {
       if (error instanceof ApiError) {
