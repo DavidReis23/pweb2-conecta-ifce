@@ -1,33 +1,13 @@
 import { http } from '@/infra/http/http-client'
 import { setAccessToken } from '../storage/auth.storage'
+import type {
+  UserRequesTDO,
+  UserResponseDTO,
+} from '@/features/auth/types/dto/auth-dto'
 
 type CampusType = {
   id: string
   name: string
-}
-
-type UserRequestDTO = {
-  firstName: string
-  lastName: string
-  handle: string
-  role: 'student' | 'professor' | 'technician'
-  campus: string
-  password: string
-  email: string
-  course?: string | undefined
-}
-
-type UserResponseDTO = {
-  token: string
-  user: UserRequestDTO & {
-    id: string
-    name: string
-    avatarUrl?: string
-    campus: {
-      id: string
-      name: string
-    }
-  }
 }
 
 export async function getCampuses(): Promise<Array<CampusType>> {
@@ -36,7 +16,7 @@ export async function getCampuses(): Promise<Array<CampusType>> {
 }
 
 export async function registerUser(
-  user: UserRequestDTO,
+  user: UserRequesTDO,
 ): Promise<UserResponseDTO> {
   const responseData = await http.post<UserResponseDTO>('auth/register', user)
   setAccessToken(responseData.token)

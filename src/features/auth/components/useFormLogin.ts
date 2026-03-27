@@ -6,6 +6,7 @@ import { http } from '@/infra/http/http-client'
 import { setAccessToken } from '../storage/auth.storage'
 import { LoginSchema, type LoginFormData } from '../schemas/login.schema'
 import { ApiError } from '@/infra/http/api-error'
+import { login } from '../services/login.service'
 
 export function useFormLogin() {
   const [showPass, setShowPass] = useState<boolean>(false)
@@ -23,12 +24,7 @@ export function useFormLogin() {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      const responseData = await http.post<{ token: string; user: any }>(
-        'auth/login',
-        data,
-      )
-
-      setAccessToken(responseData.token)
+      login(data.email, data.password)
       navigate('/feed')
     } catch (error) {
       if (error instanceof ApiError) {
