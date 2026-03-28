@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import type { UserProfileDTO } from '../types/UserProfileDTO'
+import type { UserProfileDTO } from '../types/dto/UserProfileDTO'
 import { http } from '@/infra/http/http-client'
 import { getProfile } from '../Services/user.service'
 
