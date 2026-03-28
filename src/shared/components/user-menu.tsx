@@ -1,4 +1,4 @@
-import AvatarUser from './avatar'
+import UserAvatar from './user-avatar'
 import { Button } from './ui/button'
 import {
   DropdownMenu,
@@ -14,7 +14,7 @@ function UserMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="outline-none focus:outline-none">
-        <AvatarUser />
+        <UserAvatar />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuGroup>

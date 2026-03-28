@@ -11,11 +11,9 @@ export const http = {
     const finalUrl = buildUrl(endPoint, searchParams)
     const reponse = await fetch(finalUrl)
 
-    // Lemos o JSON apenas uma vez e guardamos na variável
     const responseBody = await reponse.json()
 
     if (reponse.ok) {
-      // Retornamos a variável que já tem os dados (Sem ler de novo!)
       return responseBody as ResponseType
     }
 
