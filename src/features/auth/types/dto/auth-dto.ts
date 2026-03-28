@@ -1,4 +1,4 @@
-type Role = 'STUDENT' | 'PROFESSOR' | 'TECHNICIAN'
+import type { Role } from '@/features/users/types/UserDomain'
 
 export type UserRequesTDO = {
   firstName: string
@@ -17,12 +17,7 @@ export type AuthUser = {
   lastName: string
   name: string
   avatarUrl?: string
-  handle: string
   role: Role
-  campus: {
-    id: string
-    name: string
-  }
   email: string
   course?: string | undefined
 }

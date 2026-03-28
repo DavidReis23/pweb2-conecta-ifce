@@ -1,5 +1,3 @@
-import UserAvatar from './user-avatar'
-import { Button } from './ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,21 +6,20 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu'
+} from '../../../shared/components/ui/dropdown-menu'
+import UserAvatar from './user-avatar'
 import { useUserMenu } from './useUserMenu'
-import { size } from 'zod'
 
 function UserMenu() {
-  const { authUser, getInitials, triggerLogout } = useUserMenu()
-
-  const initials = getInitials()
+  const { authUser, triggerLogout } = useUserMenu()
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="outline-none focus:outline-none">
         <UserAvatar
-          imageUrl={authUser?.avatarUrl}
-          initials={initials}
+          avatarUrl={authUser?.avatarUrl}
+          firstName={authUser?.firstName}
+          lastName={authUser?.lastName}
           size="lg"
         />
       </DropdownMenuTrigger>

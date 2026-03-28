@@ -1,7 +1,7 @@
 import { useAuth } from '@/features/auth/context/AuthContext'
 import Navbar from '@/shared/components/navbar'
 import { Button } from '@/shared/components/ui/button'
-import UserMenu from '@/shared/components/user-menu'
+import UserMenu from '@/features/users/components/user-menu'
 import { Link } from 'react-router'
 import { Navigate, Outlet } from 'react-router-dom'
 
