@@ -13,7 +13,7 @@ import {
 function UserMenu() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className='outline-none focus:outline-none'>
+      <DropdownMenuTrigger className="outline-none focus:outline-none">
         <AvatarUser />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
