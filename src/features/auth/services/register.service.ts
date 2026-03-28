@@ -3,7 +3,7 @@ import { setAccessToken } from '../storages/token.storage'
 import type {
   UserRequesTDO,
   UserResponseDTO,
-} from '@/features/auth/types/dto/auth-dto'
+} from '@/features/auth/types/dto/AuthDTO'
 
 type CampusType = {
   id: string
