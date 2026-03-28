@@ -6,9 +6,9 @@
 ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-> [cite_start]Aplicação frontend desenvolvida como Trabalho Avaliativo Teórico/Prático (N2) para a disciplina de Programação Web II do Instituto Federal do Ceará (Campus Tauá)[cite: 3, 5, 7].
+> [cite_start]Aplicação frontend desenvolvida como Trabalho Avaliativo Teórico/Prático (N2) para a disciplina de Programação Web II do Instituto Federal do Ceará (Campus Tauá).
 
-O **ConectaIFCE** é uma rede social acadêmica projetada para conectar estudantes, professores e técnicos. [cite_start]A aplicação permite o compartilhamento de ideias, interações sociais e acompanhamento de postagens em tempo real, utilizando React, Vite, TypeScript, TailwindCSS e shadcn/ui [cite: 9][cite_start], e consumindo uma API REST autenticada[cite: 13].
+O **ConectaIFCE** é uma rede social acadêmica projetada para conectar estudantes, professores e técnicos. A aplicação permite o compartilhamento de ideias, interações sociais e acompanhamento de postagens em tempo real, utilizando React, Vite, TypeScript, TailwindCSS e shadcn/ui, e consumindo uma API REST autenticada.
 
 ---
 
@@ -16,11 +16,11 @@ O **ConectaIFCE** é uma rede social acadêmica projetada para conectar estudant
 
 O ecossistema do projeto foi escolhido focando em performance, tipagem estática e produtividade:
 
-* [cite_start]**Core:** React, TypeScript e Vite[cite: 31].
-* [cite_start]**Estilização e UI:** Tailwind CSS e shadcn/ui[cite: 32, 33].
-* [cite_start]**Roteamento:** React Router DOM[cite: 36].
-* **Formulários e Validação:** React Hook Form e Zod.
-* [cite_start]**Padronização de Código:** ESLint e Prettier[cite: 34].
+* *Core:** React, TypeScript e Vite.
+* *Estilização e UI:** Tailwind CSS e shadcn/ui.
+* *Roteamento:** React Router DOM.
+* *Formulários e Validação:** React Hook Form e Zod.
+* *Padronização de Código:** ESLint e Prettier.
 
 ---
 
@@ -28,18 +28,18 @@ O ecossistema do projeto foi escolhido focando em performance, tipagem estática
 
 A aplicação possui um escopo completo de rede social:
 
-* [cite_start]**Autenticação:** Login e registro de usuários com JWT[cite: 38, 41].
-* [cite_start]**Segurança:** Proteção de rotas privadas e persistência de sessão[cite: 39].
-* [cite_start]**Feed e Postagens:** Visualização do feed principal e criação de novos posts[cite: 42, 43].
-* [cite_start]**Interações Sociais:** Sistema de curtidas e comentários em postagens[cite: 44, 45].
-* [cite_start]**Conexões:** Visualização de perfil de usuários [cite: 46][cite_start], além de sistema de seguir (Follow) e deixar de seguir (Unfollow)[cite: 47].
-* [cite_start]**Feedback Visual:** Tratamento de erros centralizado (API) [cite: 48] [cite_start]e estados de carregamento (Loading)[cite: 49].
+* *Autenticação:** Login e registro de usuários com JWT.
+* *Segurança:** Proteção de rotas privadas e persistência de sessão.
+* *Feed e Postagens:** Visualização do feed principal e criação de novos posts.
+* *Interações Sociais:** Sistema de curtidas e comentários em postagens.
+* *Conexões:** Visualização de perfil de usuários, além de sistema de seguir (Follow) e deixar de seguir (Unfollow).
+* *Feedback Visual:** Tratamento de erros centralizado (API) e estados de carregamento (Loading).
 
 ---
 
 ## 🧠 Decisões Técnicas e Evolução do Projeto
 
-Durante o desenvolvimento desta aplicação, busquei ir além da reprodução do código das videoaulas, implementando refatorações arquiteturais e melhorias focadas em manutenibilidade, escalabilidade e tipagem segura. [cite_start]Abaixo, explico as principais decisões técnicas adotadas, principalmente relacionadas às mudanças em relação ao projeto original desenvolvido pelo professor nas videoaulas[cite: 51].
+Durante o desenvolvimento desta aplicação, busquei ir além da reprodução do código das videoaulas, implementando refatorações arquiteturais e melhorias focadas em manutenibilidade, escalabilidade e tipagem segura. Abaixo, explico as principais decisões técnicas adotadas, principalmente relacionadas às mudanças em relação ao projeto original desenvolvido pelo professor nas videoaulas.
 
 ### 1. Desacoplamento da Camada de Comunicação (Services) e View Model
 Na abordagem inicial, os *Custom Hooks* (como o `useFormLogin`) acumulavam múltiplas responsabilidades: gerenciavam o estado local do formulário (validação com Zod), faziam o *fetch* direto na API e manipulavam o `localStorage`.
@@ -98,6 +98,3 @@ Siga o passo a passo para rodar o ambiente de desenvolvimento:
    ```
 
 O frontend estará disponível em `http://localhost:5173`.
-
----
-*Professor: Me. [cite_start]Lucas Mendes [cite: 4]* [cite_start]*Disciplina: Programação Web II [cite: 5]* ```
